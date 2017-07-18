@@ -2,33 +2,35 @@
 #               Segmentation Tree: Arbre de segmentation  
 #########################################################################
 
+                   # Written by: Nafise Fateri Gouard  #
+###########################################################################
 # segmentation tree: CART method
 
 
 
-# method= la méthode de segmentation
+# method= la mÃ©thode de segmentation
 #   .	CHAID : Chi-squared Automatic Interaction Detector
 #   .	CART : Classification And Decision Tree
-#   .	SIPINA : Système Interactif pour les Processus d'Interrogation Non-Arborescent
+#   .	SIPINA : SystÃ¨me Interactif pour les Processus d'Interrogation Non-Arborescent
 
 
 Ntree.CART<- function(X, y, xtype, ytype, NaIsModality){
   
   # X : une matrice des variables explicative(here it can be a list of variables, because c(x,y) make every caterorie the same )
-  # y: variable à expliqué
+  # y: variable Ã  expliquÃ©
   
   # xtype: type des variables explicatives(un vector de)
-  # ytype: type de la  variable à expliqué
+  # ytype: type de la  variable Ã  expliquÃ©
   
-  # Dans la methode CART on utilise différents critère selon le type de Y:
-  # le critère de Mesure de l'impureté d'un segment  : 
+  # Dans la methode CART on utilise diffÃ©rents critÃ¨re selon le type de Y:
+  # le critÃ¨re de Mesure de l'impuretÃ© d'un segment  : 
   #  . Indice de Gini(y nominale)
   #  . Twoingo(y ordinal)
-  #  . Least Square Deviation(Moindre carré)(y numeric)
+  #  . Least Square Deviation(Moindre carrÃ©)(y numeric)
   
-  # fixer une règle d'arrêt de la procédure:
-  # on arret la procédure quand l'effectif d'un brunch est inférieur à 5% 
-  # de l'effectif de la population initial(l'effectif= fréquencie)
+  # fixer une rÃ¨gle d'arrÃªt de la procÃ©dure:
+  # on arret la procÃ©dure quand l'effectif d'un brunch est infÃ©rieur Ã  5% 
+  # de l'effectif de la population initial(l'effectif= frÃ©quencie)
   if(NaIsModality==TRUE){for(i in 1:length(X)){X[[i]]<-NaAsModality(X[[i]])}}
   
   if(ytype=="nominal") {fun<-gini} else 
@@ -66,11 +68,11 @@ it<-function(y){
 
 #--------------------------------------------------------------------------------------------------------
 
-# Critère de Gini: y nominal 
+# CritÃ¨re de Gini: y nominal 
 gini<-function(x,y){
   #function gini
-  # x: un vecteur de la variable(modalité) expliquative
-  # y: un vecteur de la variable à expliqué
+  # x: un vecteur de la variable(modalitÃ©) expliquative
+  # y: un vecteur de la variable Ã  expliquÃ©
   
   t=table(x,y)
   S=0
@@ -86,12 +88,12 @@ gini<-function(x,y){
 
 #--------------------------------------------------------------------------------------------------------
 
-# critère de LSD, y numeric
+# critÃ¨re de LSD, y numeric
 LSD<-function(x,y)
 {
  # function LSD
  # y<- numeric
- # x<- avec deux modalité ou on le divise juste en deux partie
+ # x<- avec deux modalitÃ© ou on le divise juste en deux partie
   
   t=table(x)
   
@@ -139,7 +141,7 @@ twoing <- function(x,y){
 
 
 table.dichotomie<- function(m,s)
- # m= nombre des modalités
+ # m= nombre des modalitÃ©s
  # s= type de variable(numeric, ordinal,nominal)
 { 
   if(!is.integer(m)){m<-floor(m)}
@@ -200,7 +202,7 @@ build_brunches<-function(x,y,xtype,ytype,fun){
   
   if(xtype=="numeric"){x=numeric2ordinal(x,10)}
   t<-table(x)
-  m<-length(t) # nombre des modalité de x
+  m<-length(t) # nombre des modalitÃ© de x
   di<-table.dichotomie(m,xtype)
   
   
@@ -388,7 +390,7 @@ yOrdered<-function(x){
  X[[2]]<-x2
  X[[3]]<-x3
  X[[4]]<-x4
- name<-c("FCR","Clarté","amabilité","satis_globale")
+ name<-c("FCR","ClartÃ©","amabilitÃ©","satis_globale")
  names(X)<-name
  
  bb<-Ntree.CART(X,y,xtype,ytype,NaIsModality=TRUE)
